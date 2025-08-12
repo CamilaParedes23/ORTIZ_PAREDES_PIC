@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 const Roles: React.FC = () => {
   const { roles, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  console.log('roles en Roles.tsx', roles); 
   return (
     <div className="p-d-flex p-flex-column p-ai-center p-mt-6">
       <h2>Selecciona tu rol</h2>

@@ -1,6 +1,7 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useState } from 'react';
 import type { ReactNode } from 'react';
+import { fetchRoles } from '../services/authService';
 
 interface User {
   id: string;
@@ -45,20 +46,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     const userData: User = await res.json();
-
-    console.log(userData);
     setUser(userData);
 
-    // 2) Obtener roles del usuario logueado
-    const rolesRes = await fetch(buildUrl(`/api/roles/${userData.id}`), {
-      headers: { 'Content-Type': 'application/json' }
-    });
-    if (!rolesRes.ok) {
-      throw new Error('No se pudieron obtener los roles');
-    }
-
-    const rolesData: string[] = await rolesRes.json();
-    setRoles(rolesData);
+    // Usa el servicio para obtener roles
+    const nombresRoles = await fetchRoles(userData.id);
+    setRoles(nombresRoles);
   };
 
   const logout = () => {

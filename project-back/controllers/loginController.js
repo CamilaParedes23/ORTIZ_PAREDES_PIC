@@ -31,8 +31,8 @@ export async function login(req, res) {
 // ==================
 export async function getRolesByUserId(req, res) {
   const { id } = req.params;
+  console.log('Buscando roles para usuario:', id); // <-- agrega esto
   try {
-    // Usando el procedimiento almacenado obtener_roles_usuario
     const result = await query(
       'SELECT * FROM obtener_roles_usuario($1)',
       [id]
@@ -79,8 +79,15 @@ export async function updatePassword(req, res) {
 // ==================
 export async function getAllRoles(req, res) {
     try {
-        const result = await query('SELECT * FROM obtener_roles()');
-        res.json(result.rows);
+        if (req.params.id) {
+            // Si hay id, devuelve los roles de ese usuario
+            const result = await query('SELECT * FROM obtener_roles_usuario($1)', [req.params.id]);
+            res.json(result.rows);
+        } else {
+            // Si no hay id, devuelve todos los roles
+            const result = await query('SELECT * FROM obtener_roles()');
+            res.json(result.rows);
+        }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

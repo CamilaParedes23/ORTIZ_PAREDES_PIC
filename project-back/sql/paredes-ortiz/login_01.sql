@@ -87,3 +87,16 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+CREATE OR REPLACE FUNCTION obtener_roles_usuario(p_usuario_id INT)
+RETURNS SETOF rol AS
+$$
+BEGIN
+  RETURN QUERY
+  SELECT r.*
+  FROM rol r
+  JOIN rol_usuario ru ON ru.id_rol = r.id
+  WHERE ru.id_usuario = p_usuario_id
+    AND r.activo = TRUE;
+END;
+$$ LANGUAGE plpgsql;

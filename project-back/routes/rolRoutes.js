@@ -8,7 +8,8 @@ import {
     deleteRol,
     getModulosByRol,
     assignModuloToRol,
-    removeModuloFromRol
+    removeModuloFromRol,
+    getRolesByUserId
 } from '../controllers/rolController.js';
 
 // Rutas básicas CRUD
@@ -17,6 +18,7 @@ router.get('/roles/:id', getRolById);
 router.post('/roles', createRol);
 router.put('/roles/:id', updateRol);
 router.delete('/roles/:id', deleteRol);
+router.get('/roles/usuario/:id', getRolesByUserId);
 
 // Rutas para gestión de módulos
 router.get('/roles/:id/modulos', getModulosByRol);

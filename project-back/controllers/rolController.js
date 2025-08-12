@@ -77,3 +77,12 @@ export async function removeModuloFromRol(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
+
+export async function getRolesByUserId(req, res) {
+    try {
+        const roles = await Rol.getRolesByUserId(req.params.id);
+        res.json(roles);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}

@@ -34,7 +34,7 @@ export const loginApi = async (email: string, contrasenia: string) => {
  * @returns Promise<string[]> con el listado de roles
  */
 export const fetchRoles = async (userId: string): Promise<string[]> => {
-  const res = await fetch(`${API_BASE}/api/roled/${userId}`, {
+  const res = await fetch(`${API_BASE}/api/roles/usuario/${userId}`, {
     headers: { "Content-Type": "application/json" },
   });
 
