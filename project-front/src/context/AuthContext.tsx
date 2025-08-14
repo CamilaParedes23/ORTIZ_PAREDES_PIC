@@ -3,9 +3,15 @@ import React, { createContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
 interface User {
-  id: string;
-  name: string;
-  // cualquier otro campo que devuelva tu API
+  id: number;
+  cedula: string;
+  nombres: string;
+  apellidos: string;
+  email: string;
+  telefono?: string;
+  activo: boolean;
+  fecha_registro: string;
+  ultimo_login?: string;
 }
 
 interface Role {

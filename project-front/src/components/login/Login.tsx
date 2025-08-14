@@ -3,8 +3,10 @@ import type { RefObject } from 'react';         // tipo-only import
 import { useNavigate } from 'react-router-dom';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
 import { Toast } from 'primereact/toast';
 import { AuthContext } from '../../context/AuthContext';
+import './Login.css';
 
 interface Props {
   // RefObject que puede contener Toast o null
@@ -14,11 +16,14 @@ interface Props {
 const Login: React.FC<Props> = ({ toast }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    
     try {
       await login(username, password);
       toast.current?.show({
@@ -35,40 +40,70 @@ const Login: React.FC<Props> = ({ toast }) => {
         detail: err.message,
         life: 3000
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="p-d-flex p-jc-center p-ai-center" style={{ height: '100vh' }}>
-      <form onSubmit={handleSubmit} className="p-card p-p-4" style={{ width: '320px' }}>
-        <h2 className="p-text-center">Iniciar Sesión</h2>
+    <div className="login-container">
+      <div className="login-content">
+        <Card className="login-card">
+          <div className="login-header">
+            <i className="pi pi-lock login-icon"></i>
+            <h1>Bienvenido</h1>
+            <p>Ingresa tus credenciales para continuar</p>
+          </div>
 
-        <label htmlFor="username">Usuario</label>
-        <InputText
-          id="username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          className="p-mb-3"
-          placeholder="usuario"
-        />
+          <form onSubmit={handleSubmit} className="login-form">
+            <div className="input-group">
+              <label htmlFor="username">Correo Electrónico</label>
+              <div className="input-wrapper">
+                <i className="pi pi-envelope input-icon"></i>
+                <InputText
+                  id="username"
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
+                  placeholder="tu@email.com"
+                  required
+                  disabled={loading}
+                  className="custom-input"
+                />
+              </div>
+            </div>
 
-        <label htmlFor="password">Contraseña</label>
-        <InputText
-          id="password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          className="p-mb-4"
-          placeholder="********"
-        />
+            <div className="input-group">
+              <label htmlFor="password">Contraseña</label>
+              <div className="input-wrapper">
+                <i className="pi pi-lock input-icon"></i>
+                <InputText
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  disabled={loading}
+                  className="custom-input"
+                />
+              </div>
+            </div>
 
-        <Button
-          type="submit"
-          label="Entrar"
-          icon="pi pi-sign-in"
-          className="p-button-rounded p-button-block"
-        />
-      </form>
+            <Button
+              type="submit"
+              label={loading ? "Iniciando..." : "Iniciar Sesión"}
+              icon={loading ? "pi pi-spinner pi-spin" : "pi pi-sign-in"}
+              className="login-button"
+              disabled={loading}
+              loading={loading}
+            />
+          </form>
+
+          <div className="login-footer">
+            <p>Sistema de Gestión Integral</p>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };

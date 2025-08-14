@@ -11,7 +11,7 @@ Al implementar el sistema de autenticación con roles múltiples, se presentaron
 Roles.tsx:14 Uncaught TypeError: roles.map is not a function
 ```
 
-**Causa:** El componente `Roles.tsx` esperaba recibir un array de roles, pero estaba recibiendo un objeto o valor undefined.
+**Causa:** El componente `Roles.tsx` esperaba recibir un array de roles, pero estaba recibiendo un objeto  .
 
 ### 2. **Conflicto de Rutas en el Backend**
 El endpoint `/api/roles/1` estaba siendo interceptado por la ruta incorrecta debido al orden de las rutas en `app.js`.

@@ -6,6 +6,7 @@ import { AuthContext } from './context/AuthContext';
 
 import Login from './components/login/Login';
 import Roles from './components/Roles/Roles';
+import Panel from './components/Panel/Panel';
 import Admin from './components/Admin/Admin';
 import User from './components/User/User';
 
@@ -32,6 +33,14 @@ const App: React.FC = () => {
           element={
             <PrivateRoute>
               <Roles />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/panel/:role"
+          element={
+            <PrivateRoute>
+              <Panel />
             </PrivateRoute>
           }
         />
